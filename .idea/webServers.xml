@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="cb33c38b-83a4-4227-8ac5-5b4936ee5a7e" name="MijnPhpOpleiding" url="http://localhost">
+        <fileTransfer mountedRoot="C:\phpopleiding" accessType="MOUNT" port="0" />
+      </webServer>
+    </option>
+  </component>
+</project>
