@@ -9,7 +9,7 @@
     include '../src/introductie.php'; ?>
 
     <img src="assets/images/Mark-fremen-1.jpg" width="200px" alt="Mark van der Zande">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/8_F3eEXfYYg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/8_F3eEXfYYg" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 </body>
 </html>
