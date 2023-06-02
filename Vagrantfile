@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "generic/ubuntu2004"
   config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.synced_folder ".", "/home/vagrant/php-opleiding"
 
@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.network "private_network", ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -59,6 +59,8 @@ Vagrant.configure("2") do |config|
 
     # Customize the amount of memory on the VM:
     vb.memory = "4096"
+
+    vb.cpus = 4
   end
 
   # View the documentation for the provider you are using for more
@@ -67,8 +69,21 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
-  # SHELL
+  config.vm.provision "shell", inline: <<-SHELL
+      apt-get update
+      apt-get install -y lsb-release ca-certificates apt-transport-https software-properties-common
+      add-apt-repository ppa:ondrej/php
+      apt-get update
+      apt-get install -y apache2 mysql-server php8.1 php8.1-mysql
+      cp /home/vagrant/php-opleiding/provision/phpopleiding.conf /etc/apache2/sites-available/phpopleiding.conf
+      a2ensite phpopleiding.conf
+      a2dissite 000-default.conf
+      systemctl reload apache2
+
+      echo "create database opleiding" | mysql
+      echo "CREATE USER 'opleiding'@'localhost' IDENTIFIED BY 'opleiding'" | mysql
+      echo "GRANT ALL PRIVILEGES ON opleiding.* TO 'opleiding'@'localhost';" | mysql
+      echo "ALTER USER 'opleiding'@'localhost' IDENTIFIED WITH mysql_native_password BY 'opleiding';" | mysql
+      echo "flush privileges" | mysql
+    SHELL
 end
