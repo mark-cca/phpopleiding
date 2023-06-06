@@ -1,6 +1,6 @@
 <?php
 
-
+echo '<p>Hallo Wereld</p>';
 
 echo '<p>Mijn naam is Mark van der Zande. Ik ben een student in de HBO-programma PHP & MySQL cursus en ik heb al een aanzienlijke ervaring met PHP.</p>';
 

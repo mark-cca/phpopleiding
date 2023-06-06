@@ -78,6 +78,7 @@ Vagrant.configure("2") do |config|
       cp /home/vagrant/php-opleiding/provision/phpopleiding.conf /etc/apache2/sites-available/phpopleiding.conf
       a2ensite phpopleiding.conf
       a2dissite 000-default.conf
+      sudo a2enmod rewrite
       systemctl reload apache2
 
       echo "create database opleiding" | mysql
