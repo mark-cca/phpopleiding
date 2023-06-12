@@ -28,3 +28,27 @@
     margin: 20px 0;
     display: inline-block;}
 .contant_box_404{ margin-top:-50px;}
+
+.monospace {
+    font-family: "Courier New", Courier, monospace;
+}
+
+.emo-konijn-col {
+    border: 1px dotted black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% / 15);
+    min-height: 100px;
+}
+
+.bg-danger-light {
+    background-color: #facace;
+}
+
+.bg-success-light {
+    background-color: #d6faca;
+}
+.konijn-face {
+    color: orange;
+}

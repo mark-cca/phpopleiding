@@ -12,6 +12,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/bmi">Bmi</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/emokonijn">Emokonijn</a>
+            </li>
         </ul>
     </div>
 </nav>

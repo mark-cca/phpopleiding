@@ -1,33 +1,57 @@
 <?php
 
-require_once __DIR__ . '/../../src/BMICalculator.php';
+include __DIR__ . '/../../src/emokonijn/EmoKonijn.php';
+include __DIR__ . '/../../src/emokonijn/EmoKonijnGenerator.php';
+include __DIR__ . '/../../src/emokonijn/EmoKonijnMatcher.php';
+include __DIR__ . '/../../src/emokonijn/ScoreManager.php';
 
-$length = $_POST['length'] ?? null;
-$weight = $_POST['weight'] ?? null;
-$status = '';
-$bmi = '';
+$konijnGenerator = new EmoKonijnGenerator();
+$konijnMatcher = new EmoKonijnMatcher();
+$scoreManager = new ScoreManager();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (is_numeric($length) && is_numeric($weight)) {
-        $calculator = new BMICalculator($length, $weight);
-        $bmi = $calculator->calculate();
-        $status = $calculator->getStatus();
-    } else {
-        $status = 'Voer geldige getallen in voor lengte en gewicht.';
-    }
+$row1 = [];
+$row2 = [];
+
+for ($i = 0; $i < 15; $i++) {
+    $row1[] = $konijnGenerator->generateRandomEmoKonijn();
+    $row2[] = $konijnGenerator->generateRandomEmoKonijn();
 }
-?>
 
-<form method="post" action="/bmi">
-    <label for="length">Lengte (in meters):</label><br>
-    <input type="text" id="length" name="length" value="<?= htmlspecialchars($length) ?>"><br>
-    <label for="weight">Gewicht (in kg):</label><br>
-    <input type="text" id="weight" name="weight" value="<?= htmlspecialchars($weight) ?>"><br>
-    <input type="submit" value="Bereken BMI">
-</form>
+$matches = $konijnMatcher->match($row1, $row2);
 
-<?php
-if ($bmi && $status) {
-    echo "Uw BMI is " . $bmi . ", " . $status;
+$score = count($matches);
+$scoreManager->updateScore($score);
+
+echo '<div class="d-flex">';
+foreach ($row1 as $index => $konijn) {
+    echo '<div class="emo-konijn-col m-1"><pre class="font-monospace">' . $konijn->toAsciiArt() . '</pre></div>';
 }
-?>
+echo '</div>';
+
+echo '<div class="d-flex">';
+foreach ($row2 as $index => $konijn) {
+    $matchClass = in_array($index, $matches) ? 'bg-success-light' : 'bg-danger-light';
+    echo '<div class="emo-konijn-col m-1 ' . $matchClass . '"><pre class="font-monospace">' . $konijn->toAsciiArt() . '</pre></div>';
+}
+echo '</div>';
+
+$highScore = $scoreManager->getHighScore();
+$scoresOccurrences = $scoreManager->getScoresOccurrences();
+
+echo '<div>Huidige Score: ' . $score . '</div>';
+echo '<div>Highscore: ' . $highScore . '</div>';
+
+echo '<div class="row">';
+echo '<div class="col">';
+echo '<table class="table">';
+echo '<thead><tr><th>Hoe vaak komen scores voor?</th></tr></thead>';
+echo '<tbody>';
+for ($i = 0; $i <= 15; $i++) {
+    echo '<tr>';
+    echo '<td>Score ' . $i . ' komt ' . $scoresOccurrences[$i] . ' keer voor</td>';
+    echo '</tr>';
+}
+echo '</tbody>';
+echo '</table>';
+echo '</div>';
+echo '</div>';
