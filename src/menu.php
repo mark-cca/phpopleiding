@@ -1,7 +1,11 @@
 <?php
-$request = $_SERVER['REQUEST_URI'];
+$request = strtok($_SERVER['REQUEST_URI'], '?');
 
-$state = isset($_GET['state']) ? $_GET['state'] : '';
+
+$param = $_GET['id'] ?? null;
+
+
+$state = $_GET['state'] ?? '';
 
 if ($state) {
 
@@ -22,6 +26,24 @@ else{
             break;
         case '/mum' :
             require __DIR__ . '/../public/views/uselessbox.php';
+            break;
+        case '/artikelen' :
+            require __DIR__ . '/../public/views/database.php';
+            break;
+        case '/toevoegen/' :
+            require __DIR__ . '/../public/views/partials/artikel_toevoegen.php';
+            break;
+        case '/bewerken/' :
+            if ($param !== null) {
+                $_GET['id'] = $param; // Set the parameter in $_GET['id']
+            }
+            require __DIR__ . '/../public/views/partials/artikel_bewerken.php';
+            break;
+        case '/verwijderen/' :
+            if ($param !== null) {
+                $_GET['id'] = $param; // Set the parameter in $_GET['id']
+            }
+            require __DIR__ . '/../public/views/partials/artikel_verwijderen.php';
             break;
         default:
             http_response_code(404);

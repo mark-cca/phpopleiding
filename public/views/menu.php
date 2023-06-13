@@ -18,6 +18,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/mum">Most Useless Machine</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/artikelen">Artikelen</a>
+            </li>
         </ul>
     </div>
 </nav>
