@@ -15,6 +15,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/emokonijn">Emokonijn</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/mum">Most Useless Machine</a>
+            </li>
         </ul>
     </div>
 </nav>

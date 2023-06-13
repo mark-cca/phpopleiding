@@ -7,6 +7,9 @@ $weight = $_POST['weight'] ?? null;
 $status = '';
 $bmi = '';
 
+
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (is_numeric($length) && is_numeric($weight)) {
         $calculator = new BMICalculator($length, $weight);
